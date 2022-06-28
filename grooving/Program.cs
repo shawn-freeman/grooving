@@ -1,8 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using grooving;
 
-Console.WriteLine("Hello, World!");
-
 var isRunning = true;
 DbProvider _dbProvider;
 
