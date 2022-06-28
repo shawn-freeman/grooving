@@ -8,10 +8,26 @@ namespace grooving
 {
     public class DbProvider
     {
-        private string _dbPath;
-        public DbProvider(string dbPath)
+        private string _dbFile;
+        public DbProvider(string dbFile)
         {
-            _dbPath = dbPath;
+            _dbFile = dbFile;
+        }
+
+        public void Output()
+        {
+            using (FileStream fs = File.OpenRead(_dbFile))
+            {
+                using (var sr = new StreamReader(fs))
+                {
+                    string line;
+
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        Console.WriteLine(line);
+                    }
+                }
+            }
         }
 
         public void Insert()
