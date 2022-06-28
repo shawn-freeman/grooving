@@ -60,9 +60,33 @@ namespace grooving
             }            
         }
 
-        public void Update()
+        public void Update(int id, string name, string title)
         {
+            var lines = File.ReadLines(_dbFile).ToList();
 
+            var lineToModify = lines.Skip(1).FirstOrDefault(l => {
+                var lineId = Convert.ToInt32(l.Split(',')[0]);
+                return lineId == id;
+            });
+
+            using (FileStream fs = File.Create(_dbFile))
+            {
+                using (var sr = new StreamWriter(fs))
+                {
+                    sr.Write(lines[0]);
+                    foreach (var line in lines.Skip(1))
+                    {
+                        var lineValList = line.Split(',');
+                        var employeeId = Convert.ToInt32(lineValList[0]);
+                        if(employeeId == id)
+                        {
+                            lineValList[1] = name;
+                            lineValList[2] = title;
+                        }
+                        sr.Write($"\r{lineValList[0]},{lineValList[1]},{lineValList[2]}");
+                    }
+                }
+            }
         }
 
         public void Delete(int id)

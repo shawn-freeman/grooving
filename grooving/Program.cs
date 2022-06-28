@@ -32,40 +32,16 @@ while (isRunning)
     switch (menuSelection)
     {
         case 1:
-            Console.WriteLine();
-            var employees = _dbProvider.GetEmployeeRecords();
-            foreach (var employee in employees)
-            {
-                Console.WriteLine($"{employee.Id} {employee.Name} {employee.JobTitle}");
-            }
-
-            Console.WriteLine();
+            OnOutput();
             break;
         case 2:
-            Console.Write("Enter employee's name: ");
-            var name = Console.ReadLine();
-            Console.Write("Enter employee's job title: ");
-            var title = Console.ReadLine();
-
-            _dbProvider.Insert(name, title);
-
-            Console.WriteLine("New Employee Inserted.");
+            OnInsert();
             break;
         case 3:
-
+            OnUpdate();
             break;
         case 4:
-
-            Console.Write("Enter the ID of the employee to delete: ");
-            int id = 0;
-            while (!Int32.TryParse(Console.ReadLine(), out id))
-            {
-                Console.Write("Enter the ID of the employee to delete: ");
-            }
-
-            _dbProvider.Delete(id);
-
-            Console.WriteLine($"Employee deleted.\r");
+            OnDelete();            
             break;
     }
 }
@@ -73,4 +49,61 @@ while (isRunning)
 bool IsValidMenuSelection(int selection)
 {
     return (selection < 1 || selection > 4);
+}
+
+void OnOutput()
+{
+    Console.WriteLine();
+    var employees = _dbProvider.GetEmployeeRecords();
+    foreach (var employee in employees)
+    {
+        Console.WriteLine($"{employee.Id} {employee.Name} {employee.JobTitle}");
+    }
+
+    Console.WriteLine();
+}
+
+void OnInsert()
+{
+    Console.Write("Enter employee's name: ");
+    var name = Console.ReadLine();
+    Console.Write("Enter employee's job title: ");
+    var title = Console.ReadLine();
+
+    _dbProvider.Insert(name, title);
+
+    Console.WriteLine("New Employee Inserted.");
+}
+
+void OnUpdate()
+{
+    Console.Write("Enter the ID of the employee to delete: ");
+    int id = 0;
+    while (!Int32.TryParse(Console.ReadLine(), out id))
+    {
+        Console.Write("Enter the ID of the employee to update: ");
+    }
+
+    Console.Write("Enter employee's name: ");
+    var name = Console.ReadLine();
+    Console.Write("Enter employee's job title: ");
+    var title = Console.ReadLine();
+
+    _dbProvider.Update(id, name, title);
+
+    Console.WriteLine($"Employee Updated.\r");
+}
+
+void OnDelete()
+{
+    Console.Write("Enter the ID of the employee to delete: ");
+    int deleteId = 0;
+    while (!Int32.TryParse(Console.ReadLine(), out deleteId))
+    {
+        Console.Write("Enter the ID of the employee to delete: ");
+    }
+
+    _dbProvider.Delete(deleteId);
+
+    Console.WriteLine($"Employee Deleted.\r");
 }
