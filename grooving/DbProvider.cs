@@ -55,9 +55,7 @@ namespace grooving
                         JobTitle = title
                     };
 
-                    sr.WriteLine($"\r{newEmployeeRecord.Id},{newEmployeeRecord.Name},{newEmployeeRecord.JobTitle}");
-
-                    Console.WriteLine("done");
+                    sr.Write($"\r{newEmployeeRecord.Id},{newEmployeeRecord.Name},{newEmployeeRecord.JobTitle}");
                 }
             }            
         }
@@ -67,9 +65,27 @@ namespace grooving
 
         }
 
-        public void Delete()
+        public void Delete(int id)
         {
+            var lines = File.ReadLines(_dbFile).ToList();
 
+            var newLines = lines.Skip(1).Where(l => {
+                var lineId = Convert.ToInt32(l.Split(',').FirstOrDefault());
+                if (lineId != id) return true;
+                return false;
+            }).ToList();
+
+            using (FileStream fs = File.Create(_dbFile))
+            {
+                using (var sr = new StreamWriter(fs))
+                {
+                    sr.Write(lines[0]);
+                    foreach (var line in newLines)
+                    {
+                        sr.Write($"\r{line}");
+                    }
+                }
+            }
         }
     }
 }

@@ -56,6 +56,16 @@ while (isRunning)
             break;
         case 4:
 
+            Console.Write("Enter the ID of the employee to delete: ");
+            int id = 0;
+            while (!Int32.TryParse(Console.ReadLine(), out id))
+            {
+                Console.Write("Enter the ID of the employee to delete: ");
+            }
+
+            _dbProvider.Delete(id);
+
+            Console.WriteLine($"Employee deleted.\r");
             break;
     }
 }
