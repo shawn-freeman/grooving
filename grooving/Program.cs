@@ -53,9 +53,17 @@ void OnOutput()
 {
     Console.WriteLine();
     var employees = _dbProvider.GetEmployeeRecords();
-    foreach (var employee in employees)
+
+    if (employees.Any())
     {
-        Console.WriteLine($"{employee.Id} {employee.Name} {employee.JobTitle}");
+        foreach (var employee in employees)
+        {
+            Console.WriteLine($"{employee.Id} {employee.Name} {employee.JobTitle}");
+        }
+    }
+    else
+    {
+        Console.WriteLine("No Employee Records.");
     }
 
     Console.WriteLine();
