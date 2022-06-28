@@ -77,7 +77,7 @@ void OnInsert()
 
 void OnUpdate()
 {
-    Console.Write("Enter the ID of the employee to delete: ");
+    Console.Write("Enter the ID of the employee to update: ");
     int id = 0;
     while (!Int32.TryParse(Console.ReadLine(), out id))
     {

@@ -77,13 +77,20 @@ namespace grooving
                     foreach (var line in lines.Skip(1))
                     {
                         var lineValList = line.Split(',');
-                        var employeeId = Convert.ToInt32(lineValList[0]);
-                        if(employeeId == id)
+
+                        var employee = new Employee()
                         {
-                            lineValList[1] = name;
-                            lineValList[2] = title;
+                            Id = Convert.ToInt32(lineValList[0]),
+                            Name = lineValList[1],
+                            JobTitle = lineValList[2]
+                        };
+
+                        if(employee.Id == id)
+                        {
+                            employee.Name = name;
+                            employee.JobTitle = title;
                         }
-                        sr.Write($"\r{lineValList[0]},{lineValList[1]},{lineValList[2]}");
+                        sr.Write($"\r{employee.Id},{employee.Name},{employee.JobTitle}");
                     }
                 }
             }
