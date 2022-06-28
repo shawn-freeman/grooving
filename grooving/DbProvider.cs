@@ -16,6 +16,7 @@ namespace grooving
 
         public void Output()
         {
+            Console.WriteLine();
             using (FileStream fs = File.OpenRead(_dbFile))
             {
                 using (var sr = new StreamReader(fs))
@@ -28,6 +29,7 @@ namespace grooving
                     }
                 }
             }
+            Console.WriteLine();
         }
 
         public void Insert()

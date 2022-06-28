@@ -28,8 +28,6 @@ while (isRunning)
         }
     }
 
-    Console.WriteLine($"Selected {menuSelection}");
-
     //determine option
     switch (menuSelection)
     {
