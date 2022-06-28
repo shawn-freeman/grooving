@@ -42,7 +42,14 @@ while (isRunning)
             Console.WriteLine();
             break;
         case 2:
-            //_dbProvider.Insert();
+            Console.Write("Enter employee's name: ");
+            var name = Console.ReadLine();
+            Console.Write("Enter employee's job title: ");
+            var title = Console.ReadLine();
+
+            _dbProvider.Insert(name, title);
+
+            Console.WriteLine("New Employee Inserted.");
             break;
         case 3:
 

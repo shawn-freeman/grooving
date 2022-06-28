@@ -41,11 +41,21 @@ namespace grooving
 
         public void Insert(string name, string title)
         {
+            var lastLine = File.ReadLines(_dbFile).LastOrDefault().Split(',');
+
             using (FileStream fs = File.OpenWrite(_dbFile))
             {
+                fs.Seek(0, SeekOrigin.End);
                 using (var sr = new StreamWriter(fs))
                 {
-                    sr.WriteLine("coin\nfalcon\nhawk\nforest");
+                    var newEmployeeRecord = new Employee()
+                    {
+                        Id = Convert.ToInt32(lastLine[0]) + 1,
+                        Name = name,
+                        JobTitle = title
+                    };
+
+                    sr.WriteLine($"\r{newEmployeeRecord.Id},{newEmployeeRecord.Name},{newEmployeeRecord.JobTitle}");
 
                     Console.WriteLine("done");
                 }
