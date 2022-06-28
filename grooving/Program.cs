@@ -32,10 +32,17 @@ while (isRunning)
     switch (menuSelection)
     {
         case 1:
-            _dbProvider.Output();
+            Console.WriteLine();
+            var employees = _dbProvider.GetEmployeeRecords();
+            foreach (var employee in employees)
+            {
+                Console.WriteLine($"{employee.Id} {employee.Name} {employee.JobTitle}");
+            }
+
+            Console.WriteLine();
             break;
         case 2:
-
+            //_dbProvider.Insert();
             break;
         case 3:
 

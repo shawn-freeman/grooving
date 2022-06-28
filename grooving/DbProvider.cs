@@ -14,27 +14,42 @@ namespace grooving
             _dbFile = dbFile;
         }
 
-        public void Output()
+        public List<Employee> GetEmployeeRecords()
         {
-            Console.WriteLine();
+            var employees = new List<Employee>();
             using (FileStream fs = File.OpenRead(_dbFile))
             {
                 using (var sr = new StreamReader(fs))
                 {
                     string line;
-
+                    sr.ReadLine();
                     while ((line = sr.ReadLine()) != null)
                     {
-                        Console.WriteLine(line);
+                        var values = line.Split(',');
+                        var employee = new Employee();
+                        employee.Id = Convert.ToInt32(values[0]);
+                        employee.Name = values[1];
+                        employee.JobTitle = values[2];
+
+                        employees.Add(employee);
                     }
                 }
             }
-            Console.WriteLine();
+
+            return employees;
         }
 
-        public void Insert()
+        public void Insert(string name, string title)
         {
+            using (FileStream fs = File.OpenWrite(_dbFile))
+            {
+                using (var sr = new StreamWriter(fs))
+                {
+                    sr.WriteLine("coin\nfalcon\nhawk\nforest");
 
+                    Console.WriteLine("done");
+                }
+            }            
         }
 
         public void Update()
