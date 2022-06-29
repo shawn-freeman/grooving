@@ -60,19 +60,16 @@ namespace grooving
             }            
         }
 
-        public void Update(int id, string name, string title)
+        public bool Update(int id, string name, string title)
         {
             var lines = File.ReadLines(_dbFile).ToList();
-
-            var lineToModify = lines.Skip(1).FirstOrDefault(l => {
-                var lineId = Convert.ToInt32(l.Split(',')[0]);
-                return lineId == id;
-            });
+            bool found = false;
 
             using (FileStream fs = File.Create(_dbFile))
             {
                 using (var sr = new StreamWriter(fs))
                 {
+                    
                     sr.Write(lines[0]);
                     foreach (var line in lines.Skip(1))
                     {
@@ -89,11 +86,15 @@ namespace grooving
                         {
                             employee.Name = name;
                             employee.JobTitle = title;
+                            sr.Write($"\r{employee.Id},{employee.Name},{employee.JobTitle}");
+                            found = true;
                         }
-                        sr.Write($"\r{employee.Id},{employee.Name},{employee.JobTitle}");
+                        
                     }
                 }
             }
+
+            return found;
         }
 
         public void Delete(int id)

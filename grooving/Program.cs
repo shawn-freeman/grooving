@@ -95,9 +95,15 @@ void OnUpdate()
     Console.Write("Enter employee's job title: ");
     var title = Console.ReadLine();
 
-    _dbProvider.Update(id, name, title);
+    var result = _dbProvider.Update(id, name, title);
 
-    Console.WriteLine($"Employee Updated.\r");
+    if (result) {
+        Console.WriteLine($"Employee Updated.\r");
+    }
+    else
+    {
+        Console.WriteLine($"Employee Not Found.\r");
+    }
 }
 
 void OnDelete()
